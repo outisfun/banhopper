@@ -5,43 +5,10 @@ import MdClose from 'react-ionicons/lib/MdClose';
 import { BarsContext } from '../providers/BarsProvider';
 import { UserContext } from '../providers/UserProvider';
 
-
-const defVals = {
-  name: '',
-  description: '',
-  address: {
-    formattedAddress: '',
-    position: {
-      lat: 0,
-      lng: 0
-    }
-  }
-}
-
-const BarMarker = ({ isActive, itemIndex, name }) => {
-  const cls = isActive ? 'is--active' : '';
-
-  return (
-    <div className = {`fb-marker ${cls}`}>
-      <MdPin
-        color ={isActive ? 'red' : 'blue'}
-        fontSize = {isActive ? '42px' : '30px'}
-      />
-      <div className="fb-marker__window">
-        <div className="fb-marker__window__header">
-          <h5>{name}</h5>
-          <button className="bh-btn bh-btn--icon"><MdClose /></button>
-        </div>
-        <div className="fb-marker__window__content">
-          <span className="fb-label">Your friends here: </span>
-        </div>
-        <div className="fb-marker__window__footer">
-          <button className="bh-btn bh-btn--full bh-btn--enter">enter</button>
-        </div>
-      </div>
-    </div>
-  )
-}
+//
+import BarMarker from './_BarMarker';
+import BarListItem from './_BarListItem';
+import LayoutSide from './LayoutSide';
 
 class BarMapComponent extends Component {
 
@@ -78,12 +45,10 @@ class BarMapComponent extends Component {
   _onMarkerClick = (index, props) => {
     // this.isMarkerChanged = true;
     this.updateActiveMarker(Number(index));
-
     const { lat, lng, id } = props;
     const { user, enterBar } = this.props;
 
-    enterBar(id);
-
+    //enterBar(id);
     this.setState({
       activeMarker: Number(index),
       center: {
@@ -93,36 +58,75 @@ class BarMapComponent extends Component {
     })
   }
 
+  _onEnterClick = (id) => {
+    const { enterBar } = this.props;
+    enterBar(id);
+  }
+  onEnterClick = this._onEnterClick.bind(this);
+
+  _onListClick = (index, props) => {
+    this._onMarkerClick(index, props);
+  }
+  onListClick = this._onListClick.bind(this);
+
   render() {
     const { bars } = this.props;
 
-    console.log('bar map component rerenders');
+    console.log('bar map component rerenders', bars);
 
     return (
-      <div style={{ height: 'calc(90vh - 90px)', width: '100%', position: 'relative' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyDLJR14hApMiSCahjE4iiDZkhrHbLZGhm4' }}
-          defaultCenter={this.props.center}
-          center={this.state.center}
-          defaultZoom={this.props.zoom}
-          options = {this.createMapOptions}
-          onChildClick = {this._onMarkerClick}
-        >
-          { bars.map((bar, index) => {
-            const { address } = bar;
-            return(
-              <BarMarker
-                name={bar.name}
-                id={bar.id}
-                key={index}
-                lat={address.position.lat}
-                lng={address.position.lng}
-                itemIndex = {index}
-                isActive={(this.activeMarker === Number(index)) ? true : false}
-              />
-            )
-          }) }
-        </GoogleMapReact>
+      <div className="bh-bars">
+        <LayoutSide>
+          <div className="bh-bars__list">
+            <div className="bh-bars__list--inner">
+              { bars.map((bar, index) => {
+
+                let onClick = () => {
+                  let props = {
+                    lat: bar.address.position.lat,
+                    lng: bar.address.position.lng,
+                    id: bar.id
+                  };
+
+                  this.onListClick(index, props);
+                }
+                let onEnter = () => {
+                  this.onEnterClick(bar.id);
+                }
+                let isActive = (this.state.activeMarker === index);
+                return(
+                  <BarListItem isActive={isActive} onClick={onClick} onEnter={onEnter} {...bar} />
+                )
+              }) }
+            </div>
+          </div>
+        </LayoutSide>
+
+        <div style={{ height: 'calc(90vh - 90px)', width: '100%', position: 'relative' }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: 'AIzaSyDLJR14hApMiSCahjE4iiDZkhrHbLZGhm4' }}
+            defaultCenter={this.props.center}
+            center={this.state.center}
+            defaultZoom={this.props.zoom}
+            options = {this.createMapOptions}
+            onChildClick = {this._onMarkerClick}
+          >
+            { bars.map((bar, index) => {
+              const { address } = bar;
+              return(
+                <BarMarker
+                  name={bar.name}
+                  id={bar.id}
+                  key={index}
+                  lat={address.position.lat}
+                  lng={address.position.lng}
+                  itemIndex = {index}
+                  isActive={(this.activeMarker === Number(index)) ? true : false}
+                />
+              )
+            }) }
+          </GoogleMapReact>
+        </div>
       </div>
     )
   }

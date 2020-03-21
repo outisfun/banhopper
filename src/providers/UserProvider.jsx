@@ -81,7 +81,16 @@ class UserProvider extends Component {
   // enter bars
   // pay for drinks
 
-  _enterBar = async (id) => {
+  _leaveBar = () => {
+    this.props.history.push('/bars');
+
+    this.setState({
+      currentBar: null
+    })
+  }
+  leaveBar = this._leaveBar.bind(this);
+
+  _enterBar = (id) => {
     console.log('enter bar!!!', id);
 
     firestore.doc(`bars/${id}`).get().then((doc) => {
@@ -143,6 +152,7 @@ class UserProvider extends Component {
         user: this.state.user,
         currentBar: this.state.currentBar,
         enterBar: this.enterBar,
+        leaveBar: this.leaveBar,
         buyDrink: this.buyDrink
       }}>{children}</UserContext.Provider>
     )

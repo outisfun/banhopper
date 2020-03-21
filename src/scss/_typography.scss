@@ -3,13 +3,14 @@
 html,
 body {
   font-family: 'Rubik', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   color: $bh--dark;
   line-height: 1.35em;
 }
 
 button {
   font-size: 100%;
+  font-family: 'Rubik', sans-serif;
 }
 
 p {margin: 0px;}
@@ -34,6 +35,6 @@ h4 {font-size: 1.563em;}
 
 h5 {font-size: 1.25em;}
 
-h6 {font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin: 0px;}
+h6 {font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; margin: 0px;}
 
-small, .text_small {font-size: 0.75em;}
+small, .text_small {font-size: 0.8em;}

@@ -9,16 +9,21 @@ button {
   }
 }
 
-$bh--dark: #212121;
+$bh--dark: #32373a;
 $bh--light: #ebebeb;
+$bh--accent: magenta;
 
 $h--xs: 18px;
 $h--sm: 42px;
 $h--md: 60px;
+$h--lg: 90px;
+
+body, html {
+  color: $bh--dark;
+}
 
 @mixin box-shadow-sm {
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 @mixin box-shadow-md {
@@ -50,6 +55,21 @@ $h--md: 60px;
 
   &--md {
     height: $h--md;
+  }
+
+  &--simple {
+    padding: 0px;
+    color: $bh--accent;
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 18px;
+      width: 18px;
+      min-width: 18px;
+      fill: $bh--accent;
+      margin: 0px 5px;
+    }
   }
 
   &--invert {

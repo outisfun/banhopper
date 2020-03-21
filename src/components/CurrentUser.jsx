@@ -7,7 +7,7 @@ import MdLogOut from 'react-ionicons/lib/MdLogOut';
 // const lang = 'bg';
 
 const CurrentUser = ({ displayName, photoUrl, email, createdAt, children, currentBar }) => {
-  console.log('current bar', displayName);
+
   return (
     <section className="bh-user">
 

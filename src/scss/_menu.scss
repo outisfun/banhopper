@@ -1,15 +1,25 @@
 .bh-menu {
 
-  width: 400px;
+  width: 100%;
+  background-color: $bh--dark;
+  color: white;
+
+  button {
+    color: white;
+  }
 
   .bh-menu__title,
   .bh-menu__label {
-
+    color: white;
   }
 
   .bh-menu__title,
   .bh-item__title {
     width: 100%;
+  }
+
+  .bh-item__title {
+    font-weight: 500;
   }
 
   .bh-menu__label,
@@ -24,6 +34,7 @@
     align-items: center;
     height: $h--md;
     padding: 0px 15px;
+    border-bottom: 1px solid $bh--light;
   }
 
   &__item {
@@ -34,7 +45,14 @@
     width: 100%;
     text-align: left;
 
-    border-bottom: 1px solid $bh--light;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      background-color: black;
+    }
   }
 }
 
+.bh-header {
+  border-bottom: 1px solid $bh--light;
+}

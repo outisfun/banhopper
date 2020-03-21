@@ -5,8 +5,12 @@ import withUser from './withUser';
 import MdPin from 'react-ionicons/lib/MdPin';
 import MdClose from 'react-ionicons/lib/MdClose';
 
+import LayoutSide from './LayoutSide';
+
 import Modal from 'react-modal';
 
+import user from '../assets/user.jpg';
+// <Link to="/"><img src={logo} alt="Logo" /></Link>
 const menuItems = [
   {
     name: 'Wine',
@@ -27,6 +31,41 @@ const menuItems = [
     name: 'Whiskey',
     price: 7,
     credits: 35
+  },
+  {
+    name: 'Gin',
+    price: 6,
+    credits: 30
+  },
+  {
+    name: 'Aperol Spritz',
+    price: 7,
+    credits: 30
+  },
+  {
+    name: 'Soda',
+    price: 2,
+    credits: 5
+  },
+  {
+    name: 'Rakia',
+    price: 4,
+    credits: 20
+  },
+  {
+    name: 'Ouzo',
+    price: 6,
+    credits: 25
+  },
+  {
+    name: 'Berliner Luft',
+    price: 5,
+    credits: 20
+  },
+  {
+    name: 'Mint Liquor',
+    price: 5,
+    credits: 10
   }
 ];
 
@@ -59,6 +98,15 @@ const OrderDrinkModal = ({ drink, isOpen, onCloseClick, onConfirmClick }) => {
         {drink && <button onClick={onConfirmClick} className="bh-btn bh-btn--full bh-btn--md bh-btn--confirm">Confirm</button> }
       </div>
     </Modal>
+  )
+}
+
+const BarWelcome = ({ }) => {
+  return (
+    <div className="bh-bar__welcome">
+      <h1>Welcome!</h1>
+      <img src={user} alt="Logo" />
+    </div>
   )
 }
 
@@ -99,33 +147,48 @@ class BarPage extends Component {
   }
   closeModal = this._closeModal.bind(this);
 
+/*
+<div className="bh-about">
+            <div className="bh-about__image">
+            </div>
+            <div className="bh-about--inner">
+              <h4 className="bh-about__name">{ currentBar && currentBar.name }</h4>
+              <p className="bh-about__description">{ currentBar && currentBar.description }</p>
+            </div>
+          </div>*/
   render() {
     const { order, showModal } = this.state;
+    const { user, currentBar, leaveBar } = this.props;
 
     return (
       <div className="bh-bar">
-        <div className="bh-bar__indoors">
-        </div>
-        <div className="bh-menu">
-          <div className="bh-menu__header">
-            <h5 className="bh-menu__title">Menu</h5>
-            <p className="bh-menu__label bh-label bh-label--price">Price</p>
-            <p className="bh-menu__label bh-label bh-label--credits">Credits</p>
+        <LayoutSide>
+
+          <div className="bh-menu bh-left bh-left--menu">
+            <div className="bh-menu__header">
+              <h6 className="bh-menu__title">Menu</h6>
+              <p className="bh-menu__label bh-label bh-label--price">Price</p>
+              <p className="bh-menu__label bh-label bh-label--credits">Credits</p>
+            </div>
+            <ul>
+              { menuItems.map((menuItem, index) => {
+                return (
+                  <button
+                    key={`item--${index}`}
+                    className="bh-menu__item bh-item"
+                    onClick={() => { this.openModal(index); }} >
+                      <p className="bh-item__title">{ menuItem.name }</p>
+                      <p className="bh-item__label bh-label bh-label--price">{ menuItem.price } EUR</p>
+                      <p className="bh-item__label bh-label bh-label--credits">{ menuItem.credits }</p>
+                  </button>
+                );
+              })}
+            </ul>
           </div>
-          <ul>
-            { menuItems.map((menuItem, index) => {
-              return (
-                <button
-                  className="bh-menu__item bh-item"
-                  onClick={() => { this.openModal(index); }} >
-                    <h5 className="bh-item__title">{ menuItem.name }</h5>
-                    <p className="bh-item__label bh-label bh-label--price">{ menuItem.price } EUR</p>
-                    <p className="bh-item__label bh-label bh-label--credits">{ menuItem.credits }</p>
-                </button>
-              );
-            })}
-          </ul>
-        </div>
+          <button className="bh-btn bh-btn--leave" onClick={leaveBar}>leave</button>
+        </LayoutSide>
+        <BarWelcome />
+
         <OrderDrinkModal
           drink={order}
           isOpen={showModal}

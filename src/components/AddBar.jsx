@@ -14,7 +14,8 @@ const defVals = {
       lat: 0,
       lng: 0
     }
-  }
+  },
+  countPledges: 0
 }
 
 class AddBar extends Component {

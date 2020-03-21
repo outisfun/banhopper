@@ -14,10 +14,10 @@ function App() {
   return (
     <StickyContainer>
       <main className="Application">
-        <Header />
         <div className="fb">
           <Switch>
             <Route exact path ="/" component = {BarMap} />
+            <Route exact path ="/bars" component = {BarMap} />
             <Route exact path ="/add-bar" component = {AddBar} />
             <Route exact path ="/bars/:id" component = {BarPage} />
           </Switch>
