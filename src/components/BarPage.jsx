@@ -163,7 +163,15 @@ class BarPage extends Component {
     return (
       <div className="bh-bar">
         <LayoutSide>
-
+          <div className="bh-about">
+            <div className="bh-about__image">
+              <h4 className="bh-about__name">{ currentBar && currentBar.name }</h4>
+              <button className="bh-about--expand">expand</button>
+            </div>
+            <div className="bh-about__content">
+              <p className="bh-about__description">{ currentBar && currentBar.description }</p>
+            </div>
+          </div>
           <div className="bh-menu bh-left bh-left--menu">
             <div className="bh-menu__header">
               <h6 className="bh-menu__title">Menu</h6>

@@ -300,5 +300,39 @@ ul {
   &__image {
     background-color: grey;
     height: 200px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: white;
+    position: relative;
+
+    button {
+      color: white;
+      z-index: 20;
+      position: relative;
+    }
+
+    .bh-about__name {
+      z-index: 20;
+      position: relative;
+      color: white;
+      margin: 0px;
+    }
+
+    &:before {
+      @include pseudo;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0,0,0,0.45);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &__content {
+    max-height: 0px;
+    overflow: hidden;
   }
 }
