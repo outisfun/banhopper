@@ -1,3 +1,14 @@
+button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
 $bh--dark: #212121;
 $bh--light: #ebebeb;
 
@@ -22,7 +33,7 @@ $h--md: 60px;
 .bh-btn {
   height: 42px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 500;
   border: none;
   border-radius: 0px;
   letter-spacing: 1px;
@@ -30,13 +41,24 @@ $h--md: 60px;
   background-color: transparent;
   border: none;
   box-shadow: none;
+  font-family: 'Rubik', sans-serif;
+  color: $bh--dark;
 
   &--full {
     width: 100%;
   }
 
+  &--md {
+    height: $h--md;
+  }
+
   &--invert {
     background-color: $bh--dark;
+    color: white;
+  }
+
+  &--confirm {
+    background-color: green;
     color: white;
   }
 

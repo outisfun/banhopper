@@ -16,7 +16,6 @@ class BarsProvider extends Component {
 
   componentDidMount = () => {
     this.unsubscribeFromFirestore = firestore.collection('bars').onSnapshot(snapshot => {
-      console.log(snapshot);
       let bars = snapshot.docs.map(collectIdsAndDocs);
       this.setState({ bars });
     });
@@ -27,7 +26,6 @@ class BarsProvider extends Component {
   }
 
   render() {
-    console.log('barsss', this.state);
     const { bars } = this.state;
     const { children } = this.props;
     return (

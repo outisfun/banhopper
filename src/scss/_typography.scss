@@ -14,7 +14,7 @@ button {
 
 p {margin: 0px;}
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
   margin: 0px;
   font-family: 'Rubik', sans-serif;
   font-weight: 500;
@@ -33,5 +33,7 @@ h3 {font-size: 1.953em;}
 h4 {font-size: 1.563em;}
 
 h5 {font-size: 1.25em;}
+
+h6 {font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin: 0px;}
 
 small, .text_small {font-size: 0.75em;}

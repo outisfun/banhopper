@@ -13,7 +13,7 @@ const Header = () => {
     <Sticky topOffset={0}>
       {({ style }) => (
         <header className = "fb-header" style={style}>
-          <div className="fb-header__brand">banhopper</div>
+          <div className="fb-header__brand"><h4>banhopper</h4></div>
           <Authentication />
         </header>
       )}
