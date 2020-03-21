@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { Sticky } from 'react-sticky';
 import Authentication from './Authentication';
+import { UserContext } from '../providers/UserProvider';
 
-import withUser from './withUser';
+// import withUser from './withUser';
 
 
-const Header = ({ user }) => {
-  console.log('user', user);
-
-  // user && user.enterBar('kotka i mishka');
-
+const Header = () => {
+  const user = useContext(UserContext);
+  const bar = user ? user.currentBar : 'barrr';
+  console.log('my user', user);
   return (
     <Sticky topOffset={0}>
       {({ style }) => (
         <header className = "fb-header" style={style}>
-          <div className="fb-header__brand">banhopper</div>
+          <div className="fb-header__brand">{bar}</div>
           <Authentication />
         </header>
       )}
@@ -22,4 +22,4 @@ const Header = ({ user }) => {
   )
 }
 
-export default withUser(Header);
+export default Header;

@@ -1,40 +1,24 @@
 import React, { useState } from 'react';
+import { UserContext } from '../providers/UserProvider';
 
-let UserProfile = (() => {
+const getDisplayName = (WrappedComponent) => {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component!';
+}
 
-  let displayName = '';
-  let currentBar = null;
+const UserProfile = (Component) => {
 
-  let getName = () => {
-    return displayName;    // Or pull this from cookie/localStorage
-  };
+  const [bar, setBar] = useState(0);
 
-  let setName = (name) => {
-    displayName = name;
-    // Also set this in cookie/localStorage
-  };
-
-  let enterBar = (id) => {
-    currentBar = id;
-    console.log('entered ', currentBar);
+  const WrappedComponent = props => {
+    return (
+      <UserContext.Consumer>
+        { user => <Component user={user} {...props} /> }
+      </UserContext.Consumer>
+    );
   }
 
-  let leaveBar = () => {
-    currentBar = null;
-  }
-
-  let getBar = () => {
-    return currentBar;
-  }
-
-  return {
-    getName: getName,
-    setName: setName,
-    getBar: getBar,
-    enterBar: enterBar,
-    leaveBar: leaveBar
-  }
-
-})();
+  WrappedComponent.displayName = `WithUser(${getDisplayName(WrappedComponent)})`
+  return WrappedComponent;
+}
 
 export default UserProfile;

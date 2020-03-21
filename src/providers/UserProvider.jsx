@@ -5,18 +5,23 @@ export const UserContext = createContext({ user: null });
 
 class UserProvider extends Component {
   state = {
-    user: null,
-    currentBar: null
+    user: null
   }
 
   unsubscribeFromAuth = null;
 
   componentDidMount = async () => {
+    console.log('mounts provider');
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot(snapshot => {
-          this.setState({ user: { uid: snapshot.id, ...snapshot.data() }})
+          this.setState({ user: {
+            uid: snapshot.id,
+            ...snapshot.data(),
+            currentBar: null,
+            enterBar: this.enterBar
+          }})
         });
       }
 
@@ -24,24 +29,29 @@ class UserProvider extends Component {
     });
   }
 
+  componentDidUpdate = () => {
+    console.log('updated');
+  }
+
   componentWillUnmount = () => {
     this.unsubscribeFromAuth();
   }
 
-  enterBar = (id) => {
-    this.setState({
-      currentBar: id
-    })
+  _enterBar = (id) => {
+    console.log('enter bar!!!', id);
+    let { user } = this.state;
+    user.currentBar = id;
+
+    this.setState({ user });
   }
+  enterBar = this._enterBar.bind(this);
 
   render() {
-    let { user } = this.state;
-    user && (user.currentBar = this.state.currentBar);
-    user && (user.enterBar = this.enterBar);
+    const { user } = this.state;
     const { children } = this.props;
-
+    console.log('update!', this.state);
     return (
-      <UserContext.Provider value = {user}>{children}</UserContext.Provider>
+      <UserContext.Provider value = {{ user: this.state.user, enterBar: this.enterBar }}>{children}</UserContext.Provider>
     )
   }
 }

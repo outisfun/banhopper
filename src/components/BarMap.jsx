@@ -3,8 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import MdPin from 'react-ionicons/lib/MdPin';
 import MdClose from 'react-ionicons/lib/MdClose';
 import { BarsContext } from '../providers/BarsProvider';
-import UserProfile from './UserProfile';
-import withUser from './withUser';
+import { UserContext } from '../providers/UserProvider';
 
 const defVals = {
   name: '',
@@ -79,8 +78,9 @@ class BarMapComponent extends Component {
     // this.isMarkerChanged = true;
     this.updateActiveMarker(Number(index));
     const { lat, lng, id } = props;
-    const { user } = this.props;
-    user.enterBar('my bar');
+    const { user, enterBar } = this.props;
+    console.log('on marker', this.props);
+    enterBar(id);
 
     this.setState({
       activeMarker: Number(index),
@@ -94,7 +94,7 @@ class BarMapComponent extends Component {
   render() {
     const { bars } = this.props;
 
-    console.log('props ', this.props);
+    console.log('bar map component rerenders');
 
     return (
       <div style={{ height: 'calc(90vh - 90px)', width: '100%', position: 'relative' }}>
@@ -126,12 +126,18 @@ class BarMapComponent extends Component {
   }
 };
 
-const BarMap = ({ user }) => {
+const BarMap = () => {
   const bars = useContext(BarsContext);
+  const { user, enterBar } = useContext(UserContext);
+  const bar = user ? user.currentBar : 'my bar';
+  console.log('bar map rerenders');
 
   return (
-    <BarMapComponent bars={bars} user={user}/>
+    <div>
+      <h1>this is { bar }</h1>
+      <BarMapComponent bars={bars} user={user} enterBar={enterBar} />
+    </div>
   )
 }
 
-export default withUser(BarMap);
+export default BarMap;

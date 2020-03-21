@@ -6,18 +6,10 @@ const getDisplayName = (WrappedComponent) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component!';
 }
 
-export const UP = () => {
-  const [bar, setBar] = useState(0);
-
-  return (
-    <h1>func</h1>
-  )
-}
-
 const withUser = (Component) => {
 
   const WrappedComponent = props => {
-    console.log('return component');
+    console.log('return component! because props changed');
     return (
       <UserContext.Consumer>
         { user => <Component user={user} {...props} /> }

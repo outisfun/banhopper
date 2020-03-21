@@ -12,11 +12,11 @@ import * as serviceWorker from './serviceWorker';
 
 render(
   <Router>
-    <BarsProvider>
-      <UserProvider>
+    <UserProvider>
+      <BarsProvider>
         <App />
-      </UserProvider>
-    </BarsProvider>
+      </BarsProvider>
+    </UserProvider>
   </Router>,
   document.getElementById('root')
 );
