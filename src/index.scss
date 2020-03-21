@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .fb {
 
 }
@@ -30,6 +34,8 @@ code {
 .fb-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 0px 15px;
   height: 90px;
   overflow: hidden;
 }
@@ -102,3 +108,65 @@ code {
     }
   }
 }
+
+img {
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.bh-user {
+  display: flex;
+  align-items: center;
+
+  &__photo {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &__info {
+    button {
+      padding: 0px;
+      font-weight: 400;
+    }
+  }
+}
+
+.bh-bar {
+  display: flex;
+  min-height: calc(100vh - 90px);
+
+  &__indoors {
+    min-width: calc(100% - 400px);
+    background-color: pink;
+  }
+
+  &__menu {
+    width: 400px;
+
+    button {
+      display: block;
+      width: 100%;
+      height: 42px;
+      border-bottom: 1px solid $bh--light;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+

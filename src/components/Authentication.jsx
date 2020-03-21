@@ -12,9 +12,9 @@ const Wtf = ({ user }) => {
 
 const Authentication = ({ loading }) => {
 
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   if (loading) return null;
-
+  console.log('render auth ', user);
   return (
     //<div>{user ? <CurrentUser {...user} /> : <SignInAndSignUp />}</div>
     <div className="urb-auth">

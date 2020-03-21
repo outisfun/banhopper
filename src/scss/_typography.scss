@@ -8,7 +8,11 @@ body {
   line-height: 1.35em;
 }
 
-p {margin-bottom: 1.15rem;}
+button {
+  font-size: 100%;
+}
+
+p {margin: 0px;}
 
 h1, h2, h3, h4, h5 {
   margin: 0px;
@@ -30,4 +34,4 @@ h4 {font-size: 1.563em;}
 
 h5 {font-size: 1.25em;}
 
-small, .text_small {font-size: 0.8em;}
+small, .text_small {font-size: 0.75em;}

@@ -5,6 +5,7 @@ import MdClose from 'react-ionicons/lib/MdClose';
 import { BarsContext } from '../providers/BarsProvider';
 import { UserContext } from '../providers/UserProvider';
 
+
 const defVals = {
   name: '',
   description: '',
@@ -77,9 +78,10 @@ class BarMapComponent extends Component {
   _onMarkerClick = (index, props) => {
     // this.isMarkerChanged = true;
     this.updateActiveMarker(Number(index));
+
     const { lat, lng, id } = props;
     const { user, enterBar } = this.props;
-    console.log('on marker', this.props);
+
     enterBar(id);
 
     this.setState({
@@ -129,12 +131,9 @@ class BarMapComponent extends Component {
 const BarMap = () => {
   const bars = useContext(BarsContext);
   const { user, enterBar } = useContext(UserContext);
-  const bar = user ? user.currentBar : 'my bar';
-  console.log('bar map rerenders');
 
   return (
     <div>
-      <h1>this is { bar }</h1>
       <BarMapComponent bars={bars} user={user} enterBar={enterBar} />
     </div>
   )

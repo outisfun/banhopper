@@ -9,10 +9,9 @@ const getDisplayName = (WrappedComponent) => {
 const withUser = (Component) => {
 
   const WrappedComponent = props => {
-    console.log('return component! because props changed');
     return (
       <UserContext.Consumer>
-        { user => <Component user={user} {...props} /> }
+        { user => <Component {...user} {...props} /> }
       </UserContext.Consumer>
     );
   }

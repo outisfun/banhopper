@@ -6,22 +6,21 @@ import MdLogOut from 'react-ionicons/lib/MdLogOut';
 // import { menu } from '../../language/content';
 // const lang = 'bg';
 
-const CurrentUser = ({ displayName, photoUrl, email, createdAt, children }) => {
+const CurrentUser = ({ displayName, photoUrl, email, createdAt, children, currentBar }) => {
+  console.log('current bar', displayName);
   return (
-    <section className="urb-auth__user">
+    <section className="bh-user">
 
-      <div className="urb-user__photo">
+      <div className="bh-user__photo">
         {photoUrl && <img src={photoUrl} alt={displayName} />}
       </div>
-      <div className="urb-user__info">
+      <div className="bh-user__info">
         <p>{ displayName }</p>
-      </div>
-      <div className="urb-user__actions">
-        <button onClick={signOut} className = "urb-user__logout urb-button urb-button--simple">
-          signout
+        { currentBar && <small>currently in {currentBar.name}</small> }
+        <button onClick={signOut} className = "bh-btn bh-btn--link bh-btn--logout">
+          <small>Log out</small>
         </button>
       </div>
-
     </section>
   );
 };

@@ -33,6 +33,9 @@ $h--md: 60px;
 
   &--full {
     width: 100%;
+  }
+
+  &--invert {
     background-color: $bh--dark;
     color: white;
   }
@@ -52,6 +55,14 @@ $h--md: 60px;
       fill: $bh--dark;
       stroke: blue;
     }
+  }
+
+  &--link {
+    border-bottom: 1px solid $bh--dark;
+    text-transform: lowercase;
+    height: auto;
+    letter-spacing: 0px;
+    padding: 0px;
   }
 }
 
