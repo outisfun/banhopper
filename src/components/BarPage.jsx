@@ -1,16 +1,22 @@
 import React, { Component, useContext } from 'react';
 import { firestore } from '../firebase.js';
-import { withRouter } from 'react-router-dom';
+
 import withUser from './withUser';
 import MdPin from 'react-ionicons/lib/MdPin';
 import MdClose from 'react-ionicons/lib/MdClose';
 
 import LayoutSide from './LayoutSide';
+import BarMenu from './_BarMenu';
+import BarEvents from './_BarEvents';
+import BarThumbnail from './_BarThumbnail';
+import BarPlaylist from './_BarPlaylist';
+import BarPublic from './_BarPublic';
 
 import Modal from 'react-modal';
 
 import user from '../assets/user.jpg';
 // <Link to="/"><img src={logo} alt="Logo" /></Link>
+
 const menuItems = [
   {
     name: 'Wine',
@@ -69,13 +75,13 @@ const menuItems = [
   }
 ];
 
+
+
+
 const OrderDrinkModal = ({ drink, isOpen, onCloseClick, onConfirmClick }) => {
   const message = drink ? `
         Thank you for supporting us through difficult times!
-        You are ordering ${drink.name} for ${drink.price} EUR,
-        and will receive ${drink.credits} credits to use
-        in better days.
-      ` : 'Thank you!!!';
+      ` : 'Thank you & cheers!';
   return (
     <Modal
       className="bh-modal"
@@ -88,27 +94,28 @@ const OrderDrinkModal = ({ drink, isOpen, onCloseClick, onConfirmClick }) => {
           onClick = {onCloseClick} />
       </div>
       <div className="bh-modal__content">
-        <h5>
+        <h5 className="msg">
           { message }
         </h5>
+        {drink && <div className="bh-modal__order">
+          <h6>Your order</h6>
+          <div className="bh-modal__order__summary">
+            <h5 className="order-drink">{drink.name}</h5>
+            <span className="order-price">{drink.price} EUR</span>
+            <span className="order-credits">{drink.credits} credits</span>
+          </div>
+        </div>}
       </div>
       <div className="bh-modal__footer">
         {!drink && <button onClick={onCloseClick} className="bh-btn bh-btn--full bh-btn--md bh-btn--invert">Back to bar</button> }
-        {drink && <button onClick={onCloseClick} className="bh-btn bh-btn--full bh-btn--md bh-btn--invert">Cancel</button> }
+        {drink && <button onClick={onCloseClick} className="bh-btn bh-btn--full bh-btn--md bh-btn--cancel">Cancel</button> }
         {drink && <button onClick={onConfirmClick} className="bh-btn bh-btn--full bh-btn--md bh-btn--confirm">Confirm</button> }
       </div>
     </Modal>
   )
 }
 
-const BarWelcome = ({ }) => {
-  return (
-    <div className="bh-bar__welcome">
-      <h1>Welcome!</h1>
-      <img src={user} alt="Logo" />
-    </div>
-  )
-}
+
 
 class BarPage extends Component {
 
@@ -157,45 +164,29 @@ class BarPage extends Component {
             </div>
           </div>*/
   render() {
-    const { order, showModal } = this.state;
+    const { order, showModal, hasOrdered } = this.state;
     const { user, currentBar, leaveBar } = this.props;
 
     return (
       <div className="bh-bar">
         <LayoutSide>
-          <div className="bh-about">
-            <div className="bh-about__image">
-              <h4 className="bh-about__name">{ currentBar && currentBar.name }</h4>
-              <button className="bh-about--expand">expand</button>
-            </div>
-            <div className="bh-about__content">
-              <p className="bh-about__description">{ currentBar && currentBar.description }</p>
-            </div>
-          </div>
-          <div className="bh-menu bh-left bh-left--menu">
-            <div className="bh-menu__header">
-              <h6 className="bh-menu__title">Menu</h6>
-              <p className="bh-menu__label bh-label bh-label--price">Price</p>
-              <p className="bh-menu__label bh-label bh-label--credits">Credits</p>
-            </div>
-            <ul>
-              { menuItems.map((menuItem, index) => {
-                return (
-                  <button
-                    key={`item--${index}`}
-                    className="bh-menu__item bh-item"
-                    onClick={() => { this.openModal(index); }} >
-                      <p className="bh-item__title">{ menuItem.name }</p>
-                      <p className="bh-item__label bh-label bh-label--price">{ menuItem.price } EUR</p>
-                      <p className="bh-item__label bh-label bh-label--credits">{ menuItem.credits }</p>
-                  </button>
-                );
-              })}
-            </ul>
-          </div>
-          <button className="bh-btn bh-btn--leave" onClick={leaveBar}>leave</button>
+          { currentBar &&
+            <BarThumbnail
+              id={currentBar.id}
+              name={currentBar.name}
+              onLeaveClick={leaveBar}
+              description={currentBar.description}
+              photoUrl={currentBar.imageUrls[0]} />
+          }
+
+          <BarEvents />
+          <BarMenu isExpanded={hasOrdered} items={menuItems} onItemClick={this.openModal} />
+
         </LayoutSide>
-        <BarWelcome />
+        { currentBar &&
+          <BarPublic
+            id={currentBar.id}
+            backgroundImage={currentBar.imageUrls[0]} /> }
 
         <OrderDrinkModal
           drink={order}

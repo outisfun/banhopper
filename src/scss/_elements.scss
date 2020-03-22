@@ -10,7 +10,7 @@ button {
 }
 
 $bh--dark: #32373a;
-$bh--light: #ebebeb;
+$bh--light: #f9f9f9;
 $bh--accent: magenta;
 
 $h--xs: 18px;
@@ -78,14 +78,18 @@ body, html {
   }
 
   &--confirm {
-    background-color: green;
+    background-color: black;
     color: white;
   }
 
+  &--cancel {
+    background-color: $bh--light;
+  }
+
   &--enter {
-    position: absolute;
+    /*position: absolute;
     bottom: 0;
-    left: 0;
+    left: 0;*/
   }
 
   &--icon {

@@ -80,7 +80,7 @@ class BarMapComponent extends Component {
           <div className="bh-bars__list">
             <div className="bh-bars__list--inner">
               { bars.map((bar, index) => {
-
+                console.log(bar.friends);
                 let onClick = () => {
                   let props = {
                     lat: bar.address.position.lat,
@@ -102,7 +102,7 @@ class BarMapComponent extends Component {
           </div>
         </LayoutSide>
 
-        <div style={{ height: 'calc(90vh - 90px)', width: '100%', position: 'relative' }}>
+        <div style={{ height: '100vh', width: '100%', position: 'relative' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: 'AIzaSyDLJR14hApMiSCahjE4iiDZkhrHbLZGhm4' }}
             defaultCenter={this.props.center}
@@ -113,6 +113,9 @@ class BarMapComponent extends Component {
           >
             { bars.map((bar, index) => {
               const { address } = bar;
+              let onEnter = () => {
+                this.onEnterClick(bar.id);
+              }
               return(
                 <BarMarker
                   name={bar.name}
@@ -121,6 +124,7 @@ class BarMapComponent extends Component {
                   lat={address.position.lat}
                   lng={address.position.lng}
                   itemIndex = {index}
+                  onEnter={onEnter}
                   isActive={(this.activeMarker === Number(index)) ? true : false}
                 />
               )

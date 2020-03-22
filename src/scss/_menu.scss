@@ -1,16 +1,16 @@
 .bh-menu {
 
   width: 100%;
-  background-color: $bh--dark;
+  /*background-color: $bh--dark;
   color: white;
 
   button {
     color: white;
-  }
+  }*/
 
   .bh-menu__title,
   .bh-menu__label {
-    color: white;
+    /*color: white;*/
   }
 
   .bh-menu__title,
@@ -35,6 +35,9 @@
     height: $h--md;
     padding: 0px 15px;
     border-bottom: 1px solid $bh--light;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    z-index: 10;
+    position: relative;
   }
 
   &__item {
@@ -44,11 +47,12 @@
     padding: 0px 15px;
     width: 100%;
     text-align: left;
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: $bh--light;
+    border-bottom: 1px solid rgba(0,0,0, 0.1);
 
     &:hover {
-      background-color: $bh--light;
+      background-color: $bh--dark;
+      color: white;
     }
   }
 }

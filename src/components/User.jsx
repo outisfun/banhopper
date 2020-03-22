@@ -1,12 +1,13 @@
 import React from 'react';
 import user from '../assets/user.jpg'; // placeholder
 
-const User = ({ displayName, photoUrl, uid }) => {
-
+const User = ({ displayName, imageUrl }) => {
+  const thumbStyle = { backgroundImage: 'url(' + imageUrl + '?alt=media)' };
+  console.log(imageUrl);
   return (
     <div className="bh-user">
       <div className="bh-user__photo">
-        {user && <img src={user} alt={displayName} />}
+        {user && <img src={imageUrl || user} alt={displayName} />}
       </div>
       <div className="bh-user__info">
         <p>{ displayName }</p>

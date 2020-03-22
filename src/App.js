@@ -6,6 +6,7 @@ import Header from './components/Header';
 import AddBar from './components/AddBar';
 import BarMap from './components/BarMap';
 import BarPage from './components/BarPage';
+import Welcome from './components/Welcome';
 
 import logo from './logo.svg';
 import './App.css';
@@ -16,7 +17,7 @@ function App() {
       <main className="Application">
         <div className="fb">
           <Switch>
-            <Route exact path ="/" component = {BarMap} />
+            <Route exact path ="/" component = {Welcome} />
             <Route exact path ="/bars" component = {BarMap} />
             <Route exact path ="/add-bar" component = {AddBar} />
             <Route exact path ="/bars/:id" component = {BarPage} />

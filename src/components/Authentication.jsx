@@ -9,8 +9,8 @@ const Authentication = ({ loading }) => {
   if (loading) return null;
   return (
     //<div>{user ? <CurrentUser {...user} /> : <SignInAndSignUp />}</div>
-    <div className="urb-auth">
-      {(user !== null) ? <CurrentUser {...user} /> : <SignInAndSignUp />}
+    <div className="bh-auth">
+      {(user !== null) ? <CurrentUser {...user} /> : <span>log in</span>}
     </div>
   );
 };

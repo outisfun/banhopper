@@ -3,6 +3,7 @@ import { firestore } from '../firebase.js';
 import StepZilla from "react-stepzilla";
 
 import AddBarInfo from './forms/_AddBarInfo';
+import AddBarImages from './forms/_AddBarImages';
 import AddBarThankYou from './forms/_AddBarThankYou';
 
 const defVals = {
@@ -15,12 +16,14 @@ const defVals = {
       lng: 0
     }
   },
+  imageUrls: [],
   countPledges: 0
 }
 
 class AddBar extends Component {
 
   state = {
+    id: null,
     currentStep: 0,
     barId: null
   }
@@ -37,27 +40,29 @@ class AddBar extends Component {
       ...update,
     }
 
-    console.log('update sample store at step ', this.state.currentStep, this.sampleStore, update);
-
     if (this.state.currentStep === 0) {
       this.uploadToFB();
+    }
+
+    const { imageUrls } = this.sampleStore;
+
+    if (this.state.currentStep === 1) {
+      const bar = this.sampleStore;
+
+      firestore.doc(`bars/${this.state.id}`).update(bar);
+      this.sampleStore = defVals;
     }
   }
 
   uploadToFB() {
-    const bar = this.sampleStore;
-
     firestore.collection('bars')
-      .add(bar)
+      .add({ })
       .then((docRef) => {
-        console.log('did it');
+        this.setState({ id: docRef.id });
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);
       });
-
-    this.sampleStore = defVals;
-
   }
 
   render() {
@@ -66,6 +71,14 @@ class AddBar extends Component {
         name: "Add name, description and location",
         component:
           <AddBarInfo
+            getStore={() => (this.getStore())}
+            updateStore={(u) => {this.updateStore(u)}} />
+      },
+      {
+        name: "Add images",
+        component:
+          <AddBarImages
+            id={this.state.id}
             getStore={() => (this.getStore())}
             updateStore={(u) => {this.updateStore(u)}} />
       },

@@ -40,13 +40,10 @@ class AddBarInfo extends Component {
     };
 
     this.setState(_state);
-
-
   }
   validationCheck = this._validationCheck.bind(this);
 
   isValidated() {
-    console.log('is validated');
     const _state = this.state;
 
     this.props.updateStore({
@@ -55,6 +52,13 @@ class AddBarInfo extends Component {
 
     return true;
   }
+
+  _onUpload(filenames) {
+    this.setState({
+      imageUrls: filenames
+    });
+  }
+  onUpload = this._onUpload.bind(this);
 
   _grabUserInput() {
     return {

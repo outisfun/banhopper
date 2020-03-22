@@ -2,6 +2,7 @@
 @import 'scss/_typography';
 @import 'scss/_modal';
 @import 'scss/_menu';
+@import 'scss/_expandable';
 
 body {
   margin: 0;
@@ -64,16 +65,17 @@ code {
   position: relative;
 
   &__window {
-    height: 150px;
-    width: 300px;
+    height: 40px;
+    width: 100px;
     position: absolute;
-    top: -160px;
+    top: -60px;
     left: 50%;
     transform: translate3d(-50%, 0, 0);
-    margin-left: 15px;
+    margin-left: 20px;
     background-color: white;
     @include box-shadow-sm;
-    opacity: 0.2;
+    opacity: 0;
+    transition: 0.1s opacity;
 
     &:after {
       @include pseudo;
@@ -94,6 +96,17 @@ code {
       padding: 0px 0px 0px 10px;
       height: $h--sm;
       border-bottom: 1px solid $bh--light;
+    }
+
+    button {
+      color: white;
+      background-color: $bh--dark;
+    }
+  }
+
+  &.is--active {
+    .fb-marker__window {
+      opacity: 1;
     }
   }
 }
@@ -129,10 +142,11 @@ ul {
   align-items: center;
 
   &__photo {
-    height: 36px;
-    width: 36px;
+    height: 24px;
+    width: 24px;
     border-radius: 50%;
     overflow: hidden;
+    margin-right: 6px;
   }
 
   &__info {
@@ -149,7 +163,6 @@ ul {
 
   &__welcome {
     min-width: calc(100% - 400px);
-    background-color: pink;
   }
 
   &__menu {
@@ -170,18 +183,19 @@ ul {
 }
 
 .bh-label {
-  font-size: 0.75em;
-  opacity: 0.75;
+  font-size: 0.8em;
+  opacity: 0.85;
 }
 
 .bh-bars__list__item {
   &__header {
     height: $h--lg;
+    background-color: $bh--light;
 
     button {
       height: 100%;
       width: 100%;
-      border-bottom: 1px solid $bh--light;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
       text-align: left;
       font-weight: 500;
       padding: 0px 15px;
@@ -198,6 +212,10 @@ ul {
         align-items: center;
       }
 
+      .bh-item__info {
+
+      }
+
       .bh-label {
         position: absolute;
         top: -20px;
@@ -205,17 +223,29 @@ ul {
 
       .bh-item__info {
         display: flex;
+        flex-grow: 1.5;
+        position: relative;
 
-        svg {
-          border-radius: 50%;
-          overflow: hidden;
-          background-color: $bh--light;
+        svg.bh-icon--small {
+          height: 15px;
+          width: 15px;
+          margin-right: 3px;
+        }
+
+        svg.bh-icon--xs {
+          position: absolute;
+          right: -5px;
         }
 
         &__all {
           span.count {
-            font-size: 0.75em;
-            margin-left: 5px;
+            font-size: 0.8em;
+          }
+
+          svg {
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: $bh--light;
           }
         }
 
@@ -243,26 +273,56 @@ ul {
       transition: 0.1s all;
       transition-delay: 0s;
       padding: 30px 15px;
+
+      p{
+        margin-bottom: 15px;
+      }
+    }
+
+    button.bh-btn--enter {
+      background-color: white;
     }
   }
 
   &.is--active {
+    .bh-bars__list__item__header {
+      background-color: $bh--dark;
+
+      .bh-item__info,
+      .bh-item__title {
+        color: white;
+      }
+    }
     .bh-bars__list__item__content {
       max-height: 300px;
       transition-delay: 0s;
+      background-color: black;
+      color: white;
+
       &--inner {
         opacity: 1;
         transition-delay: 0.1s;
       }
+
+    }
+    svg.bh-icon--xs {
+      transform: rotateZ(180deg);
+      fill: white;
     }
   }
 }
 
 .user-thumb-small {
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   border-radius: 50%;
   overflow: hidden;
+  margin-right: 3px;
+
+  img {
+    min-height: 100%;
+    min-width: 100%;
+  }
 }
 
 .bh-layout {
@@ -279,12 +339,7 @@ ul {
 
 .bh-btn {
   &--leave {
-    position: absolute;
-    bottom: 0;
-    background-color: red;
-    color: white;
-    height: 60px;
-    text-align: center;
+
   }
 }
 
@@ -334,5 +389,307 @@ ul {
   &__content {
     max-height: 0px;
     overflow: hidden;
+  }
+}
+
+.bh-playlist {
+
+  iframe {
+    width: 100%;
+  }
+}
+
+
+.bh-icon {
+  &--xs {
+    svg {
+      height: 13px;
+      width: 13px;
+      min-width: 13px;
+    }
+  }
+
+  &--sm {
+    svg {
+      height: 15px;
+      width: 15px;
+      min-width: 15px;
+    }
+  }
+}
+
+.bh-title {
+  &--small {
+    font-weight: 500;
+  }
+}
+
+.bh-events {
+  .bh-expandable__content--inner {
+    padding: 0px;
+  }
+}
+
+.bh-event {
+  display: flex;
+  height: $h--lg;
+  align-items: flex-start;
+  border-bottom: 1px solid #ebebeb;
+  padding: 20px 15px 0px;
+
+  .bh-event__name,
+  .bh-event__details {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+  &__details {
+    display: flex;
+
+    .bh-detail {
+      flex-basis: 0;
+      flex-grow: 1;
+      padding: 0px 5px;
+      position: relative;
+
+      p, small {
+        line-height: 1.2em;
+        display: block;
+      }
+
+      .bh-label {
+
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.bh-thumbnail {
+  position: relative;
+
+  .bh-btn--leave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    position: absolute;
+    color: white;
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: white;
+      margin-right: 10px;
+    }
+  }
+
+  &__image {
+    height: 180px;
+    width: 100%;
+    display: flex;
+    padding: 15px;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center center;
+    color: white;
+
+    &:before {
+      @include pseudo;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(0,0,0,0.05);
+    }
+
+    svg {
+      fill: white;
+    }
+  }
+
+  &__name {
+    position: relative;
+    z-index: 10;
+  }
+
+  .bh-expandable {
+
+    &__header {
+      padding: 0px;
+      position: relative;
+
+      svg {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        fill: white;
+        z-index: 20;
+      }
+    }
+  }
+}
+
+.bh-public {
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  position: relative;
+
+
+  &:before {
+    @include pseudo;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.65);
+  }
+
+  &--inner {
+    color: white;
+    padding: 0px;
+    position: relative;
+    z-index: 20;
+    display: flex;
+  }
+
+  &__barhoppers,
+  &__feed {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+  &__barhoppers {
+    max-width: 300px;
+    width: 300px;
+    min-width: 300px;
+    padding: 30px 15px;
+  }
+
+  &__barhoppers__group {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    h6 {
+      margin-bottom: 30px;
+    }
+    .stranger,
+    .friend{
+      margin-bottom: 10px;
+
+      small {
+        padding-left: 30px;
+        opacity: 0.7;
+      }
+    }
+
+    &:last-of-type {
+      border: none;
+    }
+  }
+}
+
+.bh-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $bh--dark;
+  color: white;
+  min-height: 100vh;
+
+  &--inner {
+    max-width: 600px;
+
+    h4 {
+      line-height: 1.5em;
+      margin-bottom: 30px;
+    }
+    p{
+      margin-bottom: 30px;
+    }
+  }
+
+  &__intro {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+
+    button {
+      color: white;
+      background-color: transparent;
+      transition: 0.1s all;
+      border: 1px solid white;
+      display: flex;
+      width: 300px;
+      margin: 0 auto;
+      align-items: center;
+      height: 60px;
+      justify-content: center;
+
+      svg {
+        fill: white;
+        margin-right: 10px;
+      }
+
+      &:hover {
+        background-color: white;
+        color: black;
+
+        svg {
+          fill: black;
+        }
+      }
+    }
+  }
+}
+
+.bh-auth {
+  .bh-user {
+    &__info {
+      line-height: 1em;
+      margin-left: 5px;
+    }
+  }
+}
+
+.ReactModal__Overlay {
+  z-index: 20;
+}
+
+.bh-feed {
+  &--inner {
+
+  }
+
+  &__item {
+    max-width: 450px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+
+    p.msg {
+      padding-left: 30px;
+    }
+
+    img {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__user {
+    font-size: 0.8em;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    small {
+      font-size: 100%;
+    }
   }
 }

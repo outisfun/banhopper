@@ -12,10 +12,45 @@ const drinks = [
   'Wine', 'Beer', 'Cognac', 'Atlantic', 'Whiskey', 'Vodka', 'Aperol Spritz'
 ]
 
+const avatarUrl = 'https://zeroattentionspan.net/zas/avatars/';
+
 const barhoppers = [
-  'Des Punkarova', 'Katerina Vaseva', 'Plamena Avramova',
-  'Ksetka fon Teip', 'Fina Ste', 'Todor Mishinev', 'Roman Polanski',
-  'Dimitar Tanchev', 'Mariya Karova', 'Angel Vasev', 'Slavka Manolova'
+  {
+    name: 'Des Punkarova',
+    avatar: 'desi.jpg'
+  },
+  {
+    name: 'Dimitar Tanchev',
+    avatar: 'typ.jpg'
+  },
+  {
+    name: 'Plamena Avramova',
+    avatar: 'plam.jpg'
+  },
+  {
+    name: 'Psihopat',
+    avatar: 'roman.jpg'
+  },
+  {
+    name: 'Keri Cross',
+    avatar: 'keri.jpg'
+  },
+  {
+    name: 'Ksetka fon Teip',
+    avatar: 'kse.jpg'
+  },
+  {
+    name: 'Nashite',
+    avatar: 'vasevi.jpg'
+  },
+  {
+    name: 'Antonina Ilieva',
+    avatar: 'anta.jpg'
+  },
+  {
+    name: 'Dimityr Mehandzhiev',
+    avatar: 'mitko.jpg'
+  }
 ];
 
 class BarsProvider extends Component {
@@ -37,17 +72,21 @@ class BarsProvider extends Component {
         let numberOfBarhoppers = _.random(barhoppers.length);
         let numberOfFriends = _.random(5);
         for (var i = 0; i < numberOfBarhoppers; i += 1) {
-          let name = barhoppers[_.random(barhoppers.length - 1)];
+          let b = barhoppers[_.random(barhoppers.length - 1)];
+          let name = b.name;
+          let avatar = avatarUrl + b.avatar;
           let drink = drinks[_.random(drinks.length) - 1];
 
           let banhopper = { name, drink };
           bar.currentBarhoppers.push(banhopper);
         }
         for (var i = 0; i < numberOfFriends; i += 1) {
-          let name = barhoppers[_.random(barhoppers.length - 1)];
+          let b = barhoppers[_.random(barhoppers.length - 1)];
+          let name = b.name;
+          let avatar = avatarUrl + b.avatar;
           let drink = drinks[_.random(drinks.length) - 1];
 
-          let friend = { name, drink };
+          let friend = { name, avatar, drink };
           bar.friends.push(friend);
         }
       });
